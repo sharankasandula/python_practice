@@ -1,5 +1,6 @@
 from tree import Node
 from queue import Queue
+import sys
 
 inorderList = []
 preorderList = []
@@ -8,11 +9,13 @@ BFSList = []
 
 
 def initializeTree():
-    root = Node(1)
-    root.leftNode = Node(2)
-    root.rightNode = Node(3)
-    root.leftNode.leftNode = Node(4)
-    root.leftNode.rightNode = Node(5)
+    root = Node(10)
+    root.leftNode = Node(5)
+    root.rightNode = Node(15)
+    root.leftNode.leftNode = Node(3)
+    root.leftNode.rightNode = Node(7)
+    root.rightNode.leftNode = Node(12)
+    root.rightNode.rightNode = Node(18)
     return root
 
 
@@ -57,28 +60,39 @@ def breadthFirstSearch(root):
         if currentNode.rightNode is not None:  
             q.enqueue(currentNode.rightNode)
 
+def isBST(root, lowerBound, upperBound):
+    if root is None:
+        return True
+    if root.value < lowerBound or root.value > upperBound:
+        print("Your BST is wrong, b*tch. try again!")
+        return False
+    return isBST(root.leftNode, lowerBound, root.value) and isBST(root.rightNode, root.value, upperBound)
+
+
 
 root = initializeTree()
 
 inorderTraversal(root)
-print("Inorder Travesal - ")
+print("\nInorder Travesal ")
 print(inorderList)
 
 preorderTraversal(root)
-print("Preorder Travesal - ")
+print("\nPreorder Travesal ")
 print(preorderList)
 
 postorderTraversal(root)
-print("Postorder Travesal - ")
+print("\nPostorder Travesal ")
 print(postorderList)
 
-print (Queue)
 
 breadthFirstSearch(root)
-print("BFS Travesal - ")
+print("\nBFS Travesal ")
 print(BFSList)
 
-
-
+#used sys.maxsize size because root node can practically have a value from -infinity to infinity
+if isBST(root, -sys.maxsize-1, sys.maxsize):
+    print("\nIts a valid BST")
+else:
+    print("\nIts not a valid BST. Piss off")
             
     
