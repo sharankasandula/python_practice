@@ -1,1 +1,4 @@
 tree/__pycache__/
+*.code-workspace
+
+\.vscode/settings\.json
